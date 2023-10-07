@@ -30,6 +30,7 @@ export default function MovieDetails() {
             <h1> {movie.title}</h1>
             <h2>Overview</h2>
             <p>{movie.overview}</p>
+            <h3>Genres</h3>
             <ul>
               {movie.genres.map(genre => (
                 <li key={genre.id}>{genre.name}</li>

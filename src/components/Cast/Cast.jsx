@@ -5,7 +5,6 @@ import { fetchMovieCast } from 'services/api';
 export const Cast = () => {
   const [castInfo, setCastInfo] = useState([]);
   const params = useParams();
-  console.log(params);
 
   useEffect(() => {
     async function getMovieCast() {
