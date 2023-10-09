@@ -1,8 +1,9 @@
 import { MoviesList } from 'components/MoviesList/MoviesList';
 import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
 import { useSearchParams } from 'react-router-dom';
 import { fetchSearchMovie } from 'services/api';
+import { Input, SearchButton, SearchForm } from './Movies.styled';
+import toast from 'react-hot-toast';
 
 const Movies = () => {
   const [querySearch, setQuerySearch] = useState('');
@@ -18,9 +19,8 @@ const Movies = () => {
     evt.preventDefault();
     if (querySearch === '') {
       toast.error('Gotta write something!');
-
-      setSearchParams({ query: querySearch });
     }
+    setSearchParams({ query: querySearch });
   };
 
   useEffect(() => {
@@ -48,8 +48,8 @@ const Movies = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
+      <SearchForm onSubmit={handleSubmit}>
+        <Input
           onChange={handleChange}
           name="search"
           type="text"
@@ -57,8 +57,8 @@ const Movies = () => {
           autoFocus
           value={querySearch}
         />
-        <button type="submit">Search</button>
-      </form>
+        <SearchButton type="submit">Search</SearchButton>
+      </SearchForm>
       {movies.length > 0 && (
         <div>
           <MoviesList moviesList={movies} movieQuery={movieQuery} />

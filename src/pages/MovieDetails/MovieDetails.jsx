@@ -7,6 +7,15 @@ import {
   useParams,
 } from 'react-router-dom';
 import { fetchMovieDetails } from 'services/api';
+import {
+  AboutWrap,
+  AdditionalList,
+  AdditionalWrap,
+  Btn,
+  GenresList,
+  MovieWrapp,
+} from './MovieDetails.styled';
+import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
 
 export default function MovieDetails() {
   const params = useParams();
@@ -34,38 +43,46 @@ export default function MovieDetails() {
   return (
     <div>
       <Link to={searchQuery || location?.state?.from || '/'}>
-        <button>Go back</button>
+        <Btn>
+          <HiOutlineArrowNarrowLeft />
+          Go back
+        </Btn>
       </Link>
       {movie && (
         <div>
           <div>
-            <img
-              src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-              alt="Poster"
-            />
-            <h1> {movie.title}</h1>
-            <h2>Overview</h2>
-            <p>{movie.overview}</p>
-            <h3>Genres</h3>
-            <ul>
-              {movie.genres.map(genre => (
-                <li key={genre.id}>{genre.name}</li>
-              ))}
-            </ul>
-            <div>
+            <MovieWrapp>
+              <img
+                src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                alt="Poster"
+              />
+              <AboutWrap>
+                <h1> {movie.title}</h1>
+                <p>User score: {movie.vote_average}</p>
+                <h2>Overview</h2>
+                <p>{movie.overview}</p>
+                <h3>Genres</h3>
+                <GenresList>
+                  {movie.genres.map(genre => (
+                    <li key={genre.id}>{genre.name}</li>
+                  ))}
+                </GenresList>
+              </AboutWrap>
+            </MovieWrapp>
+            <AdditionalWrap>
               <p>Additional information</p>
-              <ul>
+              <AdditionalList>
                 <NavLink to={`/movies/${movie.id}/cast`}>
                   <li>Cast</li>
                 </NavLink>
                 <NavLink to={`/movies/${movie.id}/reviews`}>
                   <li>Reviews</li>
                 </NavLink>
-              </ul>
+              </AdditionalList>
               <Suspense fallback={<div>Loading...</div>}>
                 <Outlet />
               </Suspense>
-            </div>
+            </AdditionalWrap>
           </div>
         </div>
       )}
