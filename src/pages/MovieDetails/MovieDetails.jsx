@@ -1,10 +1,23 @@
-import { useEffect, useState } from 'react';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { Suspense, useEffect, useState } from 'react';
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 import { fetchMovieDetails } from 'services/api';
 
 export default function MovieDetails() {
   const params = useParams();
   const [movie, setMovie] = useState(null);
+  const location = useLocation();
+
+  const [searchQuery] = useState(
+    location?.state?.movieQuery
+      ? `/movies?query=${location.state.movieQuery}`
+      : null
+  );
 
   useEffect(() => {
     async function getMovieDetails() {
@@ -20,6 +33,9 @@ export default function MovieDetails() {
 
   return (
     <div>
+      <Link to={searchQuery || location?.state?.from || '/'}>
+        <button>Go back</button>
+      </Link>
       {movie && (
         <div>
           <div>
@@ -46,7 +62,9 @@ export default function MovieDetails() {
                   <li>Reviews</li>
                 </NavLink>
               </ul>
-              <Outlet />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Outlet />
+              </Suspense>
             </div>
           </div>
         </div>

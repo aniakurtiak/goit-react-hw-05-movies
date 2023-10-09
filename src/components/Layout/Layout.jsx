@@ -1,7 +1,8 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 import { LayoutWrap, Navigation } from './Layout.styled';
 
-export const Layout = () => {
+const Layout = () => {
   return (
     <LayoutWrap>
       <header>
@@ -10,7 +11,10 @@ export const Layout = () => {
           <NavLink to="/movies">Movies</NavLink>
         </Navigation>
       </header>
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </LayoutWrap>
   );
 };
+export default Layout;

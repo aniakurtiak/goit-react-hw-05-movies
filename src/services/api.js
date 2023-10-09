@@ -25,3 +25,8 @@ export const fetchMovieReviews = async (movieId) => {
     const responce = await axios.get(`movie/${movieId}/reviews?api_key=${API_KEY}`)
     return responce.data.results;
 }
+
+export const fetchSearchMovie = async (search, signal) => {
+    const responce = await axios.get(`search/movie?query=${search}&api_key=${API_KEY}`, {signal: signal})
+    return responce.data
+}
